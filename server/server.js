@@ -1,16 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-app.use(express.json()); // to store data in JSON format
 const cors = require("cors");
 app.use(cors());
 
 const connectDB = require("./utils/connectDB");
 const config = require("./configurations/config");
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Server is running");
-});
+const taskRouter = require("./routes/todo_router");
+app.use("/", taskRouter);
 
 connectDB()
   .then(() => {
